@@ -579,7 +579,7 @@ impl Default for Config {
             bufferline: BufferLine::default(),
             indent_guides: IndentGuidesConfig::default(),
             color_modes: false,
-            rainbow_brackets: false,
+            rainbow_brackets: true,
         }
     }
 }
