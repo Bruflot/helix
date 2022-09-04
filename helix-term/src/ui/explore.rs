@@ -531,7 +531,7 @@ impl Explorer {
             // );
         }
 
-        if self.is_focus() {
+        if self.is_focus() && cx.editor.config().explorer.show_preview {
             if preview_area.width < 30 || preview_area.height < 3 {
                 return;
             }
@@ -554,7 +554,7 @@ impl Explorer {
 
     fn handle_filter_event(&mut self, event: KeyEvent, cx: &mut Context) -> EventResult {
         let (action, mut prompt) = self.prompt.take().unwrap();
-        match event.into() {
+        match event {
             key!(Tab) | key!(Down) | ctrl!('j') => {
                 self.tree.clean_recycle();
                 return self
@@ -569,7 +569,7 @@ impl Explorer {
             }
             key!(Esc) | ctrl!('c') => self.tree.restore_recycle(),
             _ => {
-                if let EventResult::Consumed(_) = prompt.handle_event(Event::Key(event), cx) {
+                if let EventResult::Consumed(_) = prompt.handle_event(&Event::Key(event), cx) {
                     self.tree.filter(prompt.line(), cx, &mut self.state);
                 }
                 self.prompt = Some((action, prompt));
@@ -584,7 +584,7 @@ impl Explorer {
             PromptAction::Search(search_next) => search_next,
             _ => return EventResult::Ignored(None),
         };
-        match event.into() {
+        match event {
             key!(Tab) | key!(Down) | ctrl!('j') => {
                 return self
                     .tree
@@ -616,7 +616,7 @@ impl Explorer {
             }
             key!(Esc) | ctrl!('c') => self.tree.restore_view(),
             _ => {
-                if let EventResult::Consumed(_) = prompt.handle_event(Event::Key(event), cx) {
+                if let EventResult::Consumed(_) = prompt.handle_event(&Event::Key(event), cx) {
                     if search_next {
                         self.tree.search_next(cx, prompt.line(), &mut self.state);
                     } else {
@@ -640,7 +640,7 @@ impl Explorer {
             _ => return EventResult::Ignored(None),
         };
         let line = prompt.line();
-        match (action, event.into()) {
+        match (action, event) {
             (PromptAction::Mkdir, key!(Enter)) => {
                 if let Err(e) = self.new_path(line, true) {
                     cx.editor.set_error(format!("{e}"))
@@ -672,7 +672,7 @@ impl Explorer {
             }
             (_, key!(Esc) | ctrl!('c')) => {}
             _ => {
-                prompt.handle_event(Event::Key(event), cx);
+                prompt.handle_event(&Event::Key(event), cx);
                 self.prompt = Some((action, prompt));
             }
         }
@@ -714,7 +714,7 @@ impl Explorer {
 
 impl Component for Explorer {
     /// Process input events, return true if handled.
-    fn handle_event(&mut self, event: Event, cx: &mut Context) -> EventResult {
+    fn handle_event(&mut self, event: &Event, cx: &mut Context) -> EventResult {
         let key_event = match event {
             Event::Key(event) => event,
             Event::Resize(..) => return EventResult::Consumed(None),
@@ -724,10 +724,10 @@ impl Component for Explorer {
             return EventResult::Ignored(None);
         }
         if let Some(mut on_next_key) = self.on_next_key.take() {
-            return on_next_key(cx, self, key_event);
+            return on_next_key(cx, self, *key_event);
         }
 
-        if let EventResult::Consumed(c) = self.handle_prompt_event(key_event, cx) {
+        if let EventResult::Consumed(c) = self.handle_prompt_event(*key_event, cx) {
             return EventResult::Consumed(c);
         }
 
@@ -737,7 +737,7 @@ impl Component for Explorer {
             }
         })));
 
-        match key_event.into() {
+        match *key_event {
             key!(Esc) => self.unfocus(),
             ctrl!('c') => return close_fn,
             key!('n') => {
@@ -768,7 +768,7 @@ impl Component for Explorer {
             key!('?') => self.new_search_prompt(false),
             key!('m') => {
                 self.on_next_key = Some(Box::new(|_, explorer, event| {
-                    match event.into() {
+                    match event {
                         key!('d') => explorer.new_mkdir_prompt(),
                         key!('f') => explorer.new_create_file_prompt(),
                         _ => return EventResult::Ignored(None),
@@ -778,7 +778,7 @@ impl Component for Explorer {
             }
             key!('r') => {
                 self.on_next_key = Some(Box::new(|cx, explorer, event| {
-                    match event.into() {
+                    match event {
                         key!('d') => explorer.new_remove_dir_prompt(cx),
                         key!('f') => explorer.new_remove_file_prompt(cx),
                         _ => return EventResult::Ignored(None),
@@ -788,11 +788,15 @@ impl Component for Explorer {
             }
             _ => {
                 self.tree
-                    .handle_event(Event::Key(key_event), cx, &mut self.state);
+                    .handle_event(Event::Key(*key_event), cx, &mut self.state);
             }
         }
 
         EventResult::Consumed(None)
+    }
+
+    fn should_update(&self) -> bool {
+        true
     }
 
     fn render(&mut self, area: Rect, surface: &mut Surface, cx: &mut Context) {
@@ -825,6 +829,18 @@ impl Component for Explorer {
             (area.x, area.y + area.height - 1)
         };
         prompt.cursor(Rect::new(x, y, area.width, 1), editor)
+    }
+
+    fn required_size(&mut self, _viewport: (u16, u16)) -> Option<(u16, u16)> {
+        None
+    }
+
+    fn type_name(&self) -> &'static str {
+        std::any::type_name::<Self>()
+    }
+
+    fn id(&self) -> Option<&'static str> {
+        None
     }
 }
 

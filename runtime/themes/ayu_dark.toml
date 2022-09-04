@@ -62,6 +62,12 @@
 
 "special" = { fg = "orange" }
 
+"ui.explorer.file" = { fg = "white" }
+"ui.explorer.dir" = { fg = "yellow" }
+"ui.explorer.exe" = { fg = "green" }
+"ui.explorer.focus" = { modifiers = ["reversed"] }
+"ui.explorer.unfocus" = { bg = "#313f4e" }
+
 [palette]
 background = "#0f1419"
 foreground = "#E6E1CF"
