@@ -4,21 +4,21 @@
 # Syntax highlighting
 "type" = { fg = "blue" }
 "type.builtin" = { fg = "blue" }
-"constructor" = { fg = "green" }
-"constant" = { fg = "magenta" }
+"constructor" = { fg = "blue" }
+"constant" = { fg = "#ffee99" }
 "string" = { fg = "green" }
 "string.regexp" = { fg = "orange" }
 "string.special" = { fg = "yellow" }
-"comment" = { fg = "gray", modifiers = ["italic"] }
+"comment" = { fg = "gray" }
 "variable" = { fg = "foreground" }
 "variable.parameter" = { fg = "yellow" }
 "label" = { fg = "orange" }
 "punctuation" = { fg = "foreground" }
 "keyword" = { fg = "orange" }
-"keyword.control" = { fg = "yellow" }
-"keyword.directive" = { fg = "yellow" }
-"operator" = { fg = "orange" }
-"function" = { fg = "yellow", modifiers = ["bold"] }
+"keyword.control" = { fg = "orange" }
+"keyword.directive" = { fg = "orange" }
+"operator" = { fg = "yellow" }
+"function" = { fg = "yellow" }
 "tag" = { fg = "blue" }
 "namespace" = { fg = "blue" }
 "markup.heading" = { fg = "orange" }
@@ -38,8 +38,8 @@
 "ui.cursor.match" = { fg = "orange" }
 "ui.linenr" = { fg = "dark_gray" }
 "ui.linenr.selected" = { fg = "orange" }
-"ui.statusline" = { fg = "foreground", bg = "black" }
-"ui.cursorline" = { bg = "black" }
+"ui.statusline" = { fg = "#8fbcbb", bg = "#212733" }
+"ui.cursorline" = { bg = "colorcolumn" }
 "ui.popup" = { fg = "#7B91b3", bg = "black" }
 "ui.window" = { fg = "dark_gray" }
 "ui.help" = { fg = "#7B91b3", bg = "black" }
@@ -47,32 +47,34 @@
 "ui.text.focus" = { bg = "dark_gray", fg = "foreground" }
 "ui.text.info" = { fg = "foreground" }
 "ui.virtual.whitespace" = { fg = "dark_gray" }
-"ui.virtual.ruler" = { bg = "black" }
+"ui.virtual.ruler" = { bg = "colorcolumn" }
 "ui.menu" = { fg = "foreground", bg = "black" }
-"ui.menu.selected" = { bg = "orange", fg = "background" }
+"ui.menu.selected" = { bg = "#81a1c1", fg = "black" }
 "ui.selection" = { bg = "dark_gray" }
 "warning" = { fg = "yellow" }
 "error" = { fg = "red", modifiers = ["bold"] }
 "info" = { fg = "blue", modifiers = ["bold"] }
 "hint" = { fg = "blue", modifiers = ["bold"] }
-"diagnostic"= { fg = "red", modifiers = ["underlined"] }
-"diagnostic.info"= { fg = "blue", modifiers = ["underlined"] }
-"diagnostic.warning"= { fg = "yellow", modifiers = ["underlined"] }
-"diagnostic.error"= { fg = "red", modifiers = ["underlined"] }
+"diagnostic" = { fg = "red" }
+"diagnostic.info" = { fg = "blue" }
+"diagnostic.warning" = { fg = "yellow" }
+"diagnostic.error" = { fg = "red" }
 
 "special" = { fg = "orange" }
 
 [palette]
 background = "#0f1419"
-foreground = "#bfbdb6"
+foreground = "#E6E1CF"
 
-black = "#131721"
-blue = "#59c2ff"
+black = "#0c0f14"
+blue = "#36a3d9"
 dark_gray = "#2d3640"
 cyan = "#73b8ff"
 gray = "#5c6773"
 green = "#aad94c"
 magenta = "#d2a6ff"
-orange = "#ff8f40"
+orange = "#ff7733"
 red = "#f07178"
-yellow = "#e6b450"
+yellow = "#ffb454"
+
+colorcolumn = "#151a1e"
