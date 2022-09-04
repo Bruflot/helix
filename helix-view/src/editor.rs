@@ -535,6 +535,7 @@ impl Default for WhitespaceCharacters {
 pub struct IndentGuidesConfig {
     pub render: bool,
     pub character: char,
+    pub skip_first: bool,
 }
 
 impl Default for IndentGuidesConfig {
@@ -542,6 +543,7 @@ impl Default for IndentGuidesConfig {
         Self {
             render: false,
             character: '│',
+            skip_first: true,
         }
     }
 }
