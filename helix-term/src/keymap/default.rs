@@ -201,7 +201,7 @@ pub fn default() -> HashMap<Mode, Keymap> {
         "C-o" => jump_backward,
         "C-s" => save_selection,
 
-        "space" => { "Space"
+        "space" | "\\" => { "Space"
             "f" => file_picker,
             "F" => file_picker_in_current_directory,
             "b" => buffer_picker,

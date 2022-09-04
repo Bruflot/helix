@@ -20,7 +20,7 @@
 "operator" = { fg = "yellow" }
 "function" = { fg = "yellow" }
 "tag" = { fg = "blue" }
-"namespace" = { fg = "blue" }
+"namespace" = { fg = "yellow" }
 "markup.heading" = { fg = "orange" }
 "markup.list" = { fg = "yellow" }
 "markup.raw.block" = { bg = "gray", fg = "orange" }
@@ -34,10 +34,10 @@
 
 # Interface
 "ui.background"= { bg = "background" }
-"ui.cursor" = { bg = "yellow", fg = "dark_gray" }
+"ui.cursor" = { bg = "foreground", fg = "dark_gray" }
 "ui.cursor.match" = { fg = "orange" }
 "ui.linenr" = { fg = "dark_gray" }
-"ui.linenr.selected" = { fg = "orange" }
+"ui.linenr.selected" = { fg = "#f29718" }
 "ui.statusline" = { fg = "#8fbcbb", bg = "#212733" }
 "ui.cursorline" = { bg = "colorcolumn" }
 "ui.popup" = { fg = "#7B91b3", bg = "black" }
