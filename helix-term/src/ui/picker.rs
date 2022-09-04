@@ -328,7 +328,7 @@ impl<T: Item> Picker<T> {
             prompt,
             previous_pattern: String::new(),
             truncate_start: true,
-            show_preview: true,
+            show_preview: false,
             callback_fn: Box::new(callback_fn),
             completion_height: 0,
         };
